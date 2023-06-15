@@ -1,14 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SIViGila</title>
-    <title>SIViGila</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SIViGILA</title>
+  <style>
+    body {
+      text-align: center;
+      margin-top: 50px;
+      background-image: url("https://c.files.bbci.co.uk/14EC6/production/_124820758_pug1.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .dropdown {
+      display: inline-block;
+      margin: 20px;
+      text-align: left;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    
+    .dropdown select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .dropdown label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #selectedSubfields {
+      margin-top: 40px;
+      text-align: left;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bases de datos SIViGILA</h1>
+  
+  <div class="dropdown">
+    <label for="column1">DEPARTAMENTO</label>
+    <select id="column1" class="column-select">
+      <option value="">Selecciona un campo</option>
+      <option value="campo1">Campo 1</option>
+      <option value="campo2">Campo 2</option>
+      <!-- Agrega más opciones según sea necesario -->
+    </select>
+  </div>
+
+  <div class="dropdown">
+    <label for="column2">MUNICIPIO</label>
+    <select id="column2" class="column-select">
+      <option value="">Selecciona un campo</option>
+      <option value="campo1">Campo 1</option>
+      <option value="campo2">Campo 2</option>
+      <!-- Agrega más opciones según sea necesario -->
+    </select>
+  </div>
+
+  <div class="dropdown">
+    <label for="column3">FECHA</label>
+    <select id="column3" class="column-select">
+      <option value="">Selecciona un campo</option>
+      <option value="campo1">Campo 1</option>
+      <option value="campo2">Campo 2</option>
+      <!-- Agrega más opciones según sea necesario -->
+    </select>
+  </div>
+
+  <div class="dropdown">
+    <label for="column4">EVENTO</label>
+    <select id="column4" class="column-select">
+      <option value="">Selecciona un campo</option>
+      <option value="campo1">Campo 1</option>
+      <option value="campo2">Campo 2</option>
+      <!-- Agrega más opciones según sea necesario -->
+    </select>
+  </div>
+
+  <div class="dropdown">
+    <label for="column5">TIPO DE EVENTO</label>
+    <select id="column5" class="column-select">
+      <option value="">Selecciona un campo</option>
+      <option value="campo1">Campo 1</option>
+      <option value="campo2">Campo 2</option>
+      <!-- Agrega más opciones según sea necesario -->
+    </select>
+  </div>
+  
+  <!-- Agrega un contenedor para mostrar los subcampos seleccionados -->
+  <div id="selectedSubfields">
+    <p>Subcampos seleccionados:</p>
+  </div>
+
+  <script>
+    const columnSelects = document.querySelectorAll('.column-select');
+    const selectedSubfieldsElement = document.getElementById('selectedSubfields');
+
+    columnSelects.forEach(select => {
+      select.addEventListener('change', function() {
+        const selectedOption = select.options[select.selectedIndex];
+        const selectedSubfields = Array.from(selectedOption.attributes).filter(attr => attr.name.startsWith('data-'));
+        const subfieldValues = selectedSubfields.map(attr => attr.value);
+
+        const columnIndex = Array.from(columnSelects).indexOf(select) + 1;
+
+        const subfieldsContainer = document.createElement('div');
+        subfieldsContainer.classList.add('subfields-container');
+        subfieldsContainer.innerHTML = `<p>Subcampos seleccionados para la columna ${columnIndex}:</p>`;
+
+        subfieldValues.forEach(value => {
+          const subfieldElement = document.createElement('p');
+          subfieldElement.textContent = value;
+          subfieldsContainer.appendChild(subfieldElement);
+        });
+
+        const existingContainer = document.querySelector('.subfields-container');
+        if (existingContainer) {
+          existingContainer.replaceWith(subfieldsContainer);
+        } else {
+          selectedSubfieldsElement.appendChild(subfieldsContainer);
+        }
+      });
+    });
+  </script>
+</body>
 </html>
